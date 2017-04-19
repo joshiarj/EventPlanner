@@ -1,0 +1,5 @@
+1. Validate email availability during sign up.
+2. Error during sign up - blank page after form submission.
+3. 2 servlets have same url-pattern - caused by "events".
+4. 
+5. 
