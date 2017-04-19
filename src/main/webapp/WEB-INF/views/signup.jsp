@@ -10,7 +10,7 @@
         <span class="glyphicon glyphicon-info-sign"></span> Email already exists! Please try again.
     </div>
 </c:if>
-<c:if test="${param.error!=null}">
+<c:if test="${param.unerror!=null}">
     <div style="color:red">
         <span class="glyphicon glyphicon-info-sign"></span> Username already exists! Please try again.
     </div>
@@ -52,4 +52,8 @@
         <span class="glyphicon glyphicon-erase"></span> Reset form
     </button>
 </form>
+<br>
+<div>
+    Already a member? Log in <a href="${SITE_URL}/login">here</a>!
+</div>
 <%@include file="shared/footer.jsp" %>

@@ -55,7 +55,7 @@ public class NewEventController extends HttpServlet {
         }
     }
 
-    private Date stringToSQLDate(String date) throws SQLException, ParseException {
+    public static Date stringToSQLDate(String date) throws SQLException, ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date utilDate = sdf.parse(date);
         java.sql.Date sqlStartDate = new java.sql.Date(utilDate.getTime());

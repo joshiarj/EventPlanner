@@ -23,10 +23,10 @@ public class SignUpController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User currentUser=(User) request.getSession().getAttribute("loggedIn");
-        if(currentUser==null) {
+        User currentUser = (User) request.getSession().getAttribute("loggedIn");
+        if (currentUser == null) {
             request.getRequestDispatcher("/WEB-INF/views/signup.jsp").forward(request, response);
-        }else{
+        } else {
             response.sendRedirect("home?alreadyloggedin");
         }
     }
@@ -40,26 +40,27 @@ public class SignUpController extends HttpServlet {
             String rePassword = request.getParameter("retypepassword");
             String email = request.getParameter("email");
             String sex = request.getParameter("sex");
-            if (userDAO.getByUserName(userName) == null && userDAO.getByEmail(email) == null) {
-                if (password.equals(rePassword)) {
-                    User u = new User();
-                    u.setUserName(userName);
-                    u.setPassword(password);
-                    u.setEmail(email);
-                    u.setSex(sex);
-                    u.setStatus(false);
-                    if (userDAO.insert(u) > 0) {
-                        response.sendRedirect("signup?success");
+            if (userDAO.getByUserName(userName) == null) {
+                if (userDAO.getByEmail(email) == null) {
+                    if (password.equals(rePassword)) {
+                        User u = new User();
+                        u.setUserName(userName);
+                        u.setPassword(password);
+                        u.setEmail(email);
+                        u.setSex(sex);
+                        u.setStatus(false);
+                        if (userDAO.insert(u) > 0) {
+                            response.sendRedirect("signup?success");
+                        }
+                    } else {
+                        response.sendRedirect("signup?pwderror");
                     }
                 } else {
-                    response.sendRedirect("signup?pwderror");
+                    response.sendRedirect("signup?emerror");
                 }
             } else {
-                response.sendRedirect("signup?error");
+                response.sendRedirect("signup?unerror");
             }
-//            } else {
-//                response.sendRedirect("signup?unerror");
-//            }
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
         }
