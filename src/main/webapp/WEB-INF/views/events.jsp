@@ -1,5 +1,6 @@
 <%@include file="shared/header.jsp" %>
 <c:set var="eventToEdit" value="${currentEvent}"/>
+
 <c:if test="${param.editid!=null && currentEvent.organizer.userName==loggedIn.userName}">
     <h3>Edit Event: ${eventToEdit.title}</h3>
     <c:if test="${param.success!=null}">
@@ -37,6 +38,7 @@
     <br>
     <a href="${SITE_URL}/events?deleteid=${eventToEdit.id}">Delete</a> this event instead.
 </c:if>
+
 <c:if test="${param.deleteid!=null && currentEvent.organizer.userName==loggedIn.userName}">
     <h3>Delete Event: ${currentEvent.title}</h3>
     <table class="table">
@@ -69,7 +71,9 @@
     <br>
     <a href="${SITE_URL}/events?editid=${eventToEdit.id}">Edit</a> this event instead.
 </c:if>
+
 <c:if test="${param.viewid!=null}">
+    <br><a href="${SITE_URL}/events?viewall=1">Go back to all events</a><br>
     <h3>Event Details: ${currentEvent.title}</h3>
     <table class="table">
         <tr>
@@ -97,6 +101,11 @@
             <td>${currentEvent.organizer.userName}</td>
         </tr>
     </table>
+    <c:if test="${not empty loggedIn && currentEvent.organizer.userName!=loggedIn.userName}">
+        <a href="${SITE_URL}/users?msgtoid=${currentEvent.organizer.id}" class="btn btn-link">
+            <span class="glyphicon glyphicon-envelope"></span> Contact organizer
+        </a><br>
+    </c:if>
     <c:if test="${not empty loggedIn && currentEvent.organizer.userName==loggedIn.userName}">
         <a href="${SITE_URL}/events?editid=${currentEvent.id}" class="btn btn-link">
             <span class="glyphicon glyphicon-pencil"></span> Edit this event
@@ -106,13 +115,63 @@
         </a>
     </c:if>
 </c:if>
+
 <c:if test="${(param.deleteid!=null || param.editid!=null) && currentEvent.organizer.userName!=loggedIn.userName}">
     <br>
     <div style="color:red">
         <span class="glyphicon glyphicon-info-sign"></span> You are NOT authorized to edit or delete this event!
     </div>
 </c:if>
-<%--<c:if test="${param.viewall==null}">--%>
-<!--All Events:-->
-<%--</c:if>--%>
+
+<c:if test="${param.viewall!=null}">
+    <h3>All Events:</h3>
+    <table width="100%" class="table table-striped table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Organizer</th>
+            <th>Venue</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Action</th>
+        </tr>
+        <c:forEach var="event" items="${allEvents}">
+            <tr>
+                <td>${event.id}</td>
+                <td><a href="${SITE_URL}/events?viewid=${event.id}">${event.title}</a></td>
+                <td>
+                    <a href="${SITE_URL}/users?viewid=${event.organizer.id}">${event.organizer.userName}</a>
+                    <c:if test="${event.organizer.userName!=loggedIn.userName}"> | 
+                        <a href="${SITE_URL}/users?msgtoid=${event.organizer.id}">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                        </a>
+                    </c:if>
+                </td>
+                <td>
+                    <a href="https://www.google.com.np/maps/place/${event.venue}" target="_blank">${event.venue}</a>
+                </td>
+                <td>${event.startDate}</td>
+                <td>${event.endDate}</td>
+                <td>
+                    <c:if test="${not empty loggedIn && event.organizer.userName==loggedIn.userName}">
+                        <a href="${SITE_URL}/events?editid=${event.id}">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </a>| 
+                        <a style="color:red" href="${SITE_URL}/events?deleteid=${event.id}">
+                            <span class="glyphicon glyphicon-trash"></span> Delete
+                        </a>
+                    </c:if>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+    <c:if test="${not empty loggedIn}">
+        <div>
+            <a href="${SITE_URL}/newevent" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span> Add New Event
+            </a>
+        </div>
+    </c:if>
+</c:if>
+
 <%@include file="shared/footer.jsp" %>

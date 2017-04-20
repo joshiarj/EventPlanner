@@ -7,7 +7,7 @@
 </c:if>
 <c:if test="${param.notactivated!=null}">
     <div style="color:red">
-        <span class="glyphicon glyphicon-info-sign"></span> Your account is not activated yet!
+        <span class="glyphicon glyphicon-info-sign"></span> Sorry! Your account isn't activated yet.
     </div>
 </c:if>
 <form method="post" action="">
@@ -26,4 +26,8 @@
         <span class="glyphicon glyphicon-user"></span> Log In
     </button>
 </form>
+<br>
+<div>
+    First visit? Become a member. Sign up <a href="${SITE_URL}/signup">here</a>!
+</div>
 <%@include file="shared/footer.jsp" %>

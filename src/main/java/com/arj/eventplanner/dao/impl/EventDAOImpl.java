@@ -82,7 +82,7 @@ public class EventDAOImpl implements EventDAO {
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, id);
         int result = stmt.executeUpdate();
-        conn.close();
+//        conn.close();
         return result;
     }
 

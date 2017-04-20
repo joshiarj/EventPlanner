@@ -37,6 +37,7 @@ public class EventsController extends HttpServlet {
         User currentUser = (User) request.getSession().getAttribute("loggedIn");
         if (currentUser != null) {
             try {
+                request.setAttribute("allEvents", eventDAO.getAll());
                 getCurrentEvent(request, urlTokens);
                 request.getRequestDispatcher("/WEB-INF/views/events.jsp").forward(request, response);
             } catch (SQLException | ClassNotFoundException ex) {
@@ -61,12 +62,14 @@ public class EventsController extends HttpServlet {
                     e.setStartDate(stringToSQLDate(request.getParameter("startdate")));
                     e.setEndDate(stringToSQLDate(request.getParameter("enddate")));
                     if (eventDAO.updateById(e) > 0) {
-                        response.sendRedirect("home?eventedited");
+                        response.sendRedirect("events?viewall=1");
                     }
                 } else if (urlTokens[0].equalsIgnoreCase("deleteid")) {
                     if (eventDAO.deleteById(e) > 0) {
-                        response.sendRedirect("home?eventdeleted");
+                        response.sendRedirect("events?viewall=1");
                     }
+//                } else if(urlTokens[0].equals("viewall")){
+//                    eventDAO.getAll();
                 }
             }
         } catch (SQLException | ClassNotFoundException | ParseException ex) {

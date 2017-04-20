@@ -31,25 +31,27 @@ public class UserDAOImpl implements UserDAO {
             u.setPassword(rs.getString("password"));
             u.setEmail(rs.getString("email"));
             u.setSex(rs.getString("sex"));
+            u.setJoinedDate(rs.getDate("joineddate"));
             u.setStatus(rs.getBoolean("status"));
             users.add(u);
         }
-        conn.close();
+//        conn.close();
         return users;
     }
 
     @Override
     public int insert(User u) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO tbl_users(username,password,email,sex,status) "
-                + "VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO tbl_users (username,password,email,sex,joineddate,status) "
+                + "VALUES (?,?,?,?,?,?)";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, u.getUserName());
         stmt.setString(2, u.getPassword());
         stmt.setString(3, u.getEmail());
         stmt.setString(4, u.getSex());
-        stmt.setBoolean(5, u.isStatus());
+        stmt.setDate(5, u.getJoinedDate());
+        stmt.setBoolean(6, u.isStatus());
         int result = stmt.executeUpdate();
-        conn.close();
+//        conn.close();
         return result;
     }
 
@@ -76,10 +78,11 @@ public class UserDAOImpl implements UserDAO {
             u.setPassword(rs.getString("password"));
             u.setEmail(rs.getString("email"));
             u.setSex(rs.getString("sex"));
+            u.setJoinedDate(rs.getDate("joineddate"));
             u.setStatus(rs.getBoolean("status"));
             return u;
         }
-        conn.close();
+//        conn.close();
         return null;
     }
 
@@ -96,10 +99,11 @@ public class UserDAOImpl implements UserDAO {
             u.setPassword(rs.getString("password"));
             u.setEmail(rs.getString("email"));
             u.setSex(rs.getString("sex"));
+            u.setJoinedDate(rs.getDate("joineddate"));
             u.setStatus(rs.getBoolean("status"));
             return u;
         }
-        conn.close();
+//        conn.close();
         return null;
     }
 

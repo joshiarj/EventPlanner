@@ -1,9 +1,12 @@
 package com.arj.eventplanner.entity;
 
+import java.sql.Date;
+
 public class User {
     private int id;
     private String userName, password, sex, email;
     private boolean status;
+    private Date joinedDate;
 
     public User() {
     }
@@ -55,6 +58,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getJoinedDate() {
+        return joinedDate;
+    }
+
+    public void setJoinedDate(Date joinedDate) {
+        this.joinedDate = joinedDate;
     }
 
     public boolean isStatus() {

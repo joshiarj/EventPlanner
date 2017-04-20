@@ -41,7 +41,7 @@ public class LoginController extends HttpServlet {
             if (user != null) {
                 if (user.isStatus()) {
                     request.getSession().setAttribute("loggedIn", user);
-                    response.sendRedirect("dashboard?login=success");
+                    response.sendRedirect("events?viewall=1");
                 } else {
                     response.sendRedirect("login?notactivated");
                 }
