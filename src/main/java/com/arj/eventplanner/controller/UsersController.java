@@ -79,7 +79,7 @@ public class UsersController extends HttpServlet {
                     i.setMessage(request.getParameter("message"));
                     i.setReadStatus(false);
                     if(inboxDAO.insert(i)>0){
-                        response.sendRedirect("users?msgsent=1");
+                        response.sendRedirect("events?viewall=1");
                     }
                 }
             }

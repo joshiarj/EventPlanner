@@ -13,7 +13,7 @@ public interface InboxDAO {
 
     int update(Inbox i) throws ClassNotFoundException, SQLException;
 
-    int delete(Inbox i) throws ClassNotFoundException, SQLException;
+    int deleteMsgById(Inbox i) throws ClassNotFoundException, SQLException;
 
     Inbox getById(int id) throws ClassNotFoundException, SQLException;
 

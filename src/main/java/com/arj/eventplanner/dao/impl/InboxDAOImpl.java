@@ -42,7 +42,7 @@ public class InboxDAOImpl implements InboxDAO {
                 Logger.getLogger(InboxDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             i.setSubject(rs.getString("subject"));
-            i.setMessage(rs.getString("message"));
+            i.setMessage(rs.getString("message").replace("\n", "<br/>"));
             i.setReadStatus(rs.getBoolean("readstatus"));
             msgList.add(i);
         }
@@ -59,13 +59,15 @@ public class InboxDAOImpl implements InboxDAO {
         stmt.setString(3, i.getSubject());
         stmt.setString(4, i.getMessage());
         stmt.setBoolean(5, false);
-        int result = stmt.executeUpdate();
-        return result;
+        return stmt.executeUpdate();
     }
 
     @Override
-    public int delete(Inbox i) throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int deleteMsgById(Inbox i) throws ClassNotFoundException, SQLException {        
+        String sql="DELETE FROM tbl_inbox WHERE id=?";
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, i.getId());
+        return stmt.executeUpdate();
     }
 
     @Override
@@ -98,8 +100,7 @@ public class InboxDAOImpl implements InboxDAO {
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setBoolean(1, i.isReadStatus());
         stmt.setInt(2, i.getId());
-        int result = stmt.executeUpdate();
-        return result;
+        return stmt.executeUpdate();
     }
 
 }

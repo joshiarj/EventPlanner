@@ -62,11 +62,11 @@ public class EventsController extends HttpServlet {
                     e.setStartDate(stringToSQLDate(request.getParameter("startdate")));
                     e.setEndDate(stringToSQLDate(request.getParameter("enddate")));
                     if (eventDAO.updateById(e) > 0) {
-                        response.sendRedirect("home?eventedited");
+                        response.sendRedirect("events?viewall=1");
                     }
                 } else if (urlTokens[0].equalsIgnoreCase("deleteid")) {
                     if (eventDAO.deleteById(e) > 0) {
-                        response.sendRedirect("home?eventdeleted");
+                        response.sendRedirect("events?viewall=1");
                     }
 //                } else if(urlTokens[0].equals("viewall")){
 //                    eventDAO.getAll();

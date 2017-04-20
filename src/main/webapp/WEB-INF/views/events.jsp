@@ -73,6 +73,7 @@
 </c:if>
 
 <c:if test="${param.viewid!=null}">
+    <br><a href="${SITE_URL}/events?viewall=1">Go back to all events</a><br>
     <h3>Event Details: ${currentEvent.title}</h3>
     <table class="table">
         <tr>
@@ -100,6 +101,11 @@
             <td>${currentEvent.organizer.userName}</td>
         </tr>
     </table>
+    <c:if test="${not empty loggedIn && currentEvent.organizer.userName!=loggedIn.userName}">
+        <a href="${SITE_URL}/users?msgtoid=${currentEvent.organizer.id}" class="btn btn-link">
+            <span class="glyphicon glyphicon-envelope"></span> Contact organizer
+        </a><br>
+    </c:if>
     <c:if test="${not empty loggedIn && currentEvent.organizer.userName==loggedIn.userName}">
         <a href="${SITE_URL}/events?editid=${currentEvent.id}" class="btn btn-link">
             <span class="glyphicon glyphicon-pencil"></span> Edit this event
@@ -141,7 +147,9 @@
                         </a>
                     </c:if>
                 </td>
-                <td>${event.venue}</td>
+                <td>
+                    <a href="https://www.google.com.np/maps/place/${event.venue}" target="_blank">${event.venue}</a>
+                </td>
                 <td>${event.startDate}</td>
                 <td>${event.endDate}</td>
                 <td>

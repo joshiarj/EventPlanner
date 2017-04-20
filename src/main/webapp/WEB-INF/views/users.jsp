@@ -28,9 +28,12 @@
 </c:if>
 
 <c:if test="${param.msgtoid!=null}">
-    <h3>Send Message to: ${userFromURL.userName}</h3>
+    <h3>Send Message</h3>
     <div>
         <form method="post" action="">
+            <div>
+                <label>To:</label> ${userFromURL.userName}
+            </div>
             <div class="form-group">
                 <label>Subject:</label>
                 <input type="text" class="form-control" name="subject" required="required" placeholder="Enter Message Subject" />
@@ -39,7 +42,9 @@
                 <label>Message:</label>
                 <textarea class="form-control" name="message" required="required" placeholder="Enter Message"></textarea>
             </div>
-            <button type="submit" class="btn btn-success">Send Message</button>
+            <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-send"></span> Send
+            </button>
         </form>
     </div>
 </c:if>
