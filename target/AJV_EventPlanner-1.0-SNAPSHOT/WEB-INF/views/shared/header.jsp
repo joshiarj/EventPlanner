@@ -3,6 +3,13 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}"/>
 <c:set var="loggedInUser" value="${loggedIn}"/>
+<c:set var="unreadMsgsCount" value="${unreadMsgsNumber}"/>
+<%--<c:set var="unreadMsgsCount" value="0" scope="application"/>--%>
+<%--<c:forEach var="m" items="${allMessages}">
+    <c:if test="${m.receiver.userName==loggedInUser.userName && !m.readStatus}">
+        <c:set var="unreadMsgsCount" value="${unreadMsgsCount+1}" scope="application"/>
+    </c:if>
+</c:forEach>--%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,34 +33,36 @@
         </style>
         <title>Zeppelin Event Planners</title>
     </head>
-    <body>
-        <div class="container">
-            <div id="top-header">
-                <!--style="background:lightcyan; position:fixed; width: 88%;">-->
-                <table style="width: 100%">
-                    <tr>
-                        <td>
-                            <a href="${SITE_URL}/home"><span class="glyphicon glyphicon-home"></span> Home</a>
-                        </td>
-                        <td align="right">
-                            <c:if test="${not empty loggedIn}">
-                                Logged in as: ${loggedInUser.userName} |  
-                                <a href="${SITE_URL}/inbox?all=1" style="color:green">
-                                    <span class="glyphicon glyphicon-envelope" title="Inbox"></span>
-                                </a> | 
-                                <a href="${SITE_URL}/logout" style="color:red">
-                                    <span class="glyphicon glyphicon-off"></span> Log Out
-                                </a>
-                            </c:if>
-                            <c:if test="${empty loggedIn}">
-                                <a href="${SITE_URL}/signup">
-                                    <span class="glyphicon glyphicon-plus"></span> Sign Up
-                                </a> | 
-                                <a href="${SITE_URL}/login">
-                                    <span class="glyphicon glyphicon-user"></span> Log In
-                                </a>
-                            </c:if>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+    <body style="background:black">
+        <div class="container" id="top-header" style="background: palegoldenrod;">
+            <table style="width: 100%; height: 40px; vertical-align: middle">
+                <tr>
+                    <td>
+                        <a href="${SITE_URL}/home"><span class="glyphicon glyphicon-home"></span> Home</a>
+                    </td>
+                    <td align="right">
+                        <c:if test="${not empty loggedIn}">
+                            Logged in as: ${loggedInUser.userName} |  
+                            <a href="${SITE_URL}/inbox?all=1" style="color:green" title="Inbox">
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                <c:if test="${unreadMsgsCount>0}">
+                                    <font color="red"><sup><b>${unreadMsgsCount}</b></sup></font>
+                                </c:if>
+                            </a> | 
+                            <a href="${SITE_URL}/logout" style="color:red">
+                                <span class="glyphicon glyphicon-off"></span> Log Out
+                            </a>
+                        </c:if>
+                        <c:if test="${empty loggedIn}">
+                            <a href="${SITE_URL}/signup">
+                                <span class="glyphicon glyphicon-plus"></span> Sign Up
+                            </a> | 
+                            <a href="${SITE_URL}/login">
+                                <span class="glyphicon glyphicon-user"></span> Log In
+                            </a>
+                        </c:if>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="container" style="background:white">

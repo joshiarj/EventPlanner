@@ -9,10 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.myfaces.custom.fileupload.UploadedFile;
 
 public class UserDAOImpl implements UserDAO {
 
     private Connection conn;
+    private UploadedFile uploadedFile;
 
     public UserDAOImpl() throws SQLException, ClassNotFoundException {
         conn = DBConnection.conn();
@@ -48,6 +50,7 @@ public class UserDAOImpl implements UserDAO {
         stmt.setString(2, u.getPassword());
         stmt.setString(3, u.getEmail());
         stmt.setString(4, u.getSex());
+//        stmt.setBlob(5, u.getProfilePicture());
         stmt.setDate(5, u.getJoinedDate());
         stmt.setBoolean(6, u.isStatus());
         int result = stmt.executeUpdate();

@@ -42,6 +42,8 @@ public class UsersController extends HttpServlet {
         if (currentUser != null) {
             try {
                 getUserFromURL(request, urlTokens);
+                int totalUnreadMsgs = inboxDAO.getUnreadMsgNo(currentUser);
+                request.setAttribute("unreadMsgsNumber", totalUnreadMsgs);
                 request.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(request, response);
             } catch (SQLException | ClassNotFoundException ex) {
                 Logger.getLogger(UsersController.class.getName()).log(Level.SEVERE, null, ex);

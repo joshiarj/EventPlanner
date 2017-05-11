@@ -6,7 +6,9 @@
 package com.arj.eventplanner.controller;
 
 import com.arj.eventplanner.dao.EventDAO;
+import com.arj.eventplanner.dao.InboxDAO;
 import com.arj.eventplanner.dao.impl.EventDAOImpl;
+import com.arj.eventplanner.dao.impl.InboxDAOImpl;
 import com.arj.eventplanner.entity.Event;
 import com.arj.eventplanner.entity.User;
 import java.io.IOException;
@@ -25,11 +27,24 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "newevent", urlPatterns = {"/newevent/*"})
 public class NewEventController extends HttpServlet {
 
+    private InboxDAO inboxDAO;
+
+    public NewEventController() throws SQLException, ClassNotFoundException {
+        inboxDAO = new InboxDAOImpl();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User currentUser = (User) request.getSession().getAttribute("loggedIn");
         if (currentUser != null) {
-            request.getRequestDispatcher("/WEB-INF/views/newevent.jsp").forward(request, response);
+            try {
+                int totalUnreadMsgs;
+                totalUnreadMsgs = inboxDAO.getUnreadMsgNo(currentUser);
+                request.setAttribute("unreadMsgsNumber", totalUnreadMsgs);
+                request.getRequestDispatcher("/WEB-INF/views/newevent.jsp").forward(request, response);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(NewEventController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             response.sendRedirect("login");
         }

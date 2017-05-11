@@ -1,5 +1,5 @@
 <%@include file="shared/header.jsp" %>
-<h2>Log In</h2>
+<h2 align="center">Log In</h2>
 <c:if test="${param.error!=null}">
     <div style="color:red">
         <span class="glyphicon glyphicon-info-sign"></span> Invalid Username/Password! Please try again.

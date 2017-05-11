@@ -24,13 +24,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "inbox", urlPatterns = {"/inbox/*"})
 public class InboxController extends HttpServlet {
-    
+
     private InboxDAO inboxDAO;
-    
+
     public InboxController() throws SQLException, ClassNotFoundException {
         inboxDAO = new InboxDAOImpl();
     }
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] urlTokens = request.getQueryString().split("=");
@@ -38,6 +38,8 @@ public class InboxController extends HttpServlet {
         if (currentUser != null) {
             try {
                 request.setAttribute("allMessages", inboxDAO.getAll());
+                int totalUnreadMsgs = inboxDAO.getUnreadMsgNo(currentUser);
+                request.setAttribute("unreadMsgsNumber", totalUnreadMsgs);
                 getMsgFromURL(request, urlTokens);
                 request.getRequestDispatcher("/WEB-INF/views/inbox.jsp").forward(request, response);
             } catch (ClassNotFoundException | SQLException ex) {
@@ -47,7 +49,7 @@ public class InboxController extends HttpServlet {
             response.sendRedirect("login");
         }
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -84,7 +86,7 @@ public class InboxController extends HttpServlet {
             Logger.getLogger(InboxController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private Inbox getMsgFromURL(HttpServletRequest request, String[] urlTokens) throws SQLException, ClassNotFoundException {
         int id = Integer.parseInt(urlTokens[urlTokens.length - 1]);
         Inbox msg = inboxDAO.getById(id);

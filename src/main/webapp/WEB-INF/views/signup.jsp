@@ -1,5 +1,5 @@
 <%@include file="shared/header.jsp" %>
-<h2>New User Registration</h2>
+<h2 align="center">New User Registration</h2>
 <c:if test="${param.success!=null}">
     <div style="color:green">
         <span class="glyphicon glyphicon-ok-sign"></span> User successfully registered!
@@ -45,6 +45,10 @@
         <label>Retype password to confirm:</label>
         <input type="password" class="form-control" name="retypepassword" required="required"/>
     </div>
+<!--    <div class="form-group">
+        <label>Profile Picture (Optional):</label>
+        <input type="file" accept="image/*" class="form-control" name="profilepicture" />
+    </div>-->
     <button type="submit" class="btn btn-success">
         <span class="glyphicon glyphicon-plus"></span> Sign Up
     </button>

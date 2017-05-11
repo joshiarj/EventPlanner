@@ -39,6 +39,7 @@ public class SignUpController extends HttpServlet {
             String password = request.getParameter("password");
             String rePassword = request.getParameter("retypepassword");
             String email = request.getParameter("email");
+//            String photo = request.getParameter("profilepicture");
             String sex = request.getParameter("sex");
             if (userDAO.getByUserName(userName) == null) {
                 if (userDAO.getByEmail(email) == null) {
@@ -48,6 +49,7 @@ public class SignUpController extends HttpServlet {
                         u.setPassword(password);
                         u.setEmail(email);
                         u.setSex(sex);
+//                        u.setProfilePicture();
                         u.setStatus(false);
                         if (userDAO.insert(u) > 0) {
                             response.sendRedirect("signup?success");

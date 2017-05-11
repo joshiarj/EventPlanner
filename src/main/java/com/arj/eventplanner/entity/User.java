@@ -5,6 +5,7 @@ import java.sql.Date;
 public class User {
     private int id;
     private String userName, password, sex, email;
+    private byte[] profilePicture;
     private boolean status;
     private Date joinedDate;
 
@@ -58,6 +59,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public Date getJoinedDate() {

@@ -1,6 +1,6 @@
 <%@include file="shared/header.jsp" %>
 <c:if test="${param.viewid!=null}">
-    <h3>Viewing ${userFromURL.userName}'s profile!</h3>
+    <h3>Viewing ${userFromURL.userName}'s profile.</h3>
     <div>
         <table class="table">
             <tr>
@@ -9,7 +9,14 @@
             </tr>
             <tr>
                 <td><label>Email:</label></td>
-                <td>${userFromURL.email} [<a href="${SITE_URL}/users?msgtoid=${userFromURL.id}">Send Message</a>]</td>
+                <td>
+                    ${userFromURL.email}
+                    <c:if test="${userFromURL.userName!=loggedInUser.userName}">
+                        [<a href="${SITE_URL}/users?msgtoid=${userFromURL.id}">
+                            <span class="glyphicon glyphicon-envelope"></span> Send Message
+                        </a>]
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td><label>Sex:</label></td>
@@ -24,6 +31,7 @@
                 <td>${(userFromURL.status)?"Yes":"No"}</td>
             </tr>
         </table>
+
     </div>
 </c:if>
 

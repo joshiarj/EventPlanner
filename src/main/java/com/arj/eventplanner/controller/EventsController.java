@@ -6,7 +6,9 @@
 package com.arj.eventplanner.controller;
 
 import com.arj.eventplanner.dao.EventDAO;
+import com.arj.eventplanner.dao.InboxDAO;
 import com.arj.eventplanner.dao.impl.EventDAOImpl;
+import com.arj.eventplanner.dao.impl.InboxDAOImpl;
 import com.arj.eventplanner.entity.Event;
 import com.arj.eventplanner.entity.User;
 import java.io.IOException;
@@ -26,9 +28,11 @@ import javax.servlet.http.HttpServletResponse;
 public class EventsController extends HttpServlet {
 
     private EventDAO eventDAO;
+    private InboxDAO inboxDAO;
 
     public EventsController() throws SQLException, ClassNotFoundException {
         eventDAO = new EventDAOImpl();
+        inboxDAO = new InboxDAOImpl();
     }
 
     @Override
@@ -38,6 +42,8 @@ public class EventsController extends HttpServlet {
         if (currentUser != null) {
             try {
                 request.setAttribute("allEvents", eventDAO.getAll());
+                int totalUnreadMsgs = inboxDAO.getUnreadMsgNo(currentUser);
+                request.setAttribute("unreadMsgsNumber", totalUnreadMsgs);
                 getCurrentEvent(request, urlTokens);
                 request.getRequestDispatcher("/WEB-INF/views/events.jsp").forward(request, response);
             } catch (SQLException | ClassNotFoundException ex) {

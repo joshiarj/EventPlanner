@@ -18,4 +18,6 @@ public interface InboxDAO {
     Inbox getById(int id) throws ClassNotFoundException, SQLException;
 
     List<Inbox> getByReceiver(User receiver) throws ClassNotFoundException, SQLException;
+    
+    int getUnreadMsgNo(User u) throws ClassNotFoundException, SQLException;
 }

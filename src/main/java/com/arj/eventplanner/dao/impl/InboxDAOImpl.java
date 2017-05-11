@@ -63,8 +63,8 @@ public class InboxDAOImpl implements InboxDAO {
     }
 
     @Override
-    public int deleteMsgById(Inbox i) throws ClassNotFoundException, SQLException {        
-        String sql="DELETE FROM tbl_inbox WHERE id=?";
+    public int deleteMsgById(Inbox i) throws ClassNotFoundException, SQLException {
+        String sql = "DELETE FROM tbl_inbox WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setInt(1, i.getId());
         return stmt.executeUpdate();
@@ -96,11 +96,22 @@ public class InboxDAOImpl implements InboxDAO {
 
     @Override
     public int update(Inbox i) throws ClassNotFoundException, SQLException {
-        String sql="UPDATE tbl_inbox SET readstatus=? WHERE id=?";
+        String sql = "UPDATE tbl_inbox SET readstatus=? WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setBoolean(1, i.isReadStatus());
         stmt.setInt(2, i.getId());
         return stmt.executeUpdate();
+    }
+
+    @Override
+    public int getUnreadMsgNo(User u) throws ClassNotFoundException, SQLException {
+        int count = 0;
+        for (Inbox i : getAll()) {
+            if (i.getReceiver().getUserName().equalsIgnoreCase(u.getUserName()) && !i.isReadStatus()) {
+                count++;
+            }
+        }
+        return count;
     }
 
 }

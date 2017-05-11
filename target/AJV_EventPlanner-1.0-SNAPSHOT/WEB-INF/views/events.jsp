@@ -40,8 +40,13 @@
 </c:if>
 
 <c:if test="${param.deleteid!=null && currentEvent.organizer.userName==loggedIn.userName}">
+    <br><a href="${SITE_URL}/events?viewall=1">Go back to all events</a><br>
     <h3>Delete Event: ${currentEvent.title}</h3>
     <table class="table">
+        <tr>
+            <td><label>Event ID:</label></td>
+            <td>${currentEvent.id}</td>
+        </tr>
         <tr>
             <td><label>Title:</label></td>
             <td>${eventToEdit.title}</td>
@@ -76,6 +81,10 @@
     <br><a href="${SITE_URL}/events?viewall=1">Go back to all events</a><br>
     <h3>Event Details: ${currentEvent.title}</h3>
     <table class="table">
+        <tr>
+            <td><label>Event ID:</label></td>
+            <td>${currentEvent.id}</td>
+        </tr>
         <tr>
             <td><label>Title:</label></td>
             <td>${currentEvent.title}</td>
@@ -124,7 +133,7 @@
 </c:if>
 
 <c:if test="${param.viewall!=null}">
-    <h3>All Events:</h3>
+    <h3 align="center">All Events:</h3>
     <table width="100%" class="table table-striped table-hover">
         <tr>
             <th>ID</th>
